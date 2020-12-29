@@ -10,6 +10,7 @@ export const BASE_TITLE_END = ' — Minter';
 export const BASE_TITLE = BASE_TITLE_NETWORK + 'Hub demo' + BASE_TITLE_END;
 export const BASE_DESCRIPTION = 'Transfer HUB from Minter network to Ethereum and back';
 
+export const APP_BASE_URL =  process.env.APP_BASE_URL || '/';
 export const EXPLORER_API_URL = process.env.APP_EXPLORER_API_URL;
 export const EXPLORER_RTM_URL = process.env.APP_EXPLORER_RTM_URL;
 export const EXPLORER_HOST = process.env.APP_EXPLORER_HOST;

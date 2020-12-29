@@ -14,7 +14,7 @@ Object.keys(dotEnvExample).forEach((key) => {
     processEnv[key] = process.env[key];
 });
 
-import {BASE_TITLE, BASE_DESCRIPTION} from "./assets/variables";
+import {BASE_TITLE, BASE_DESCRIPTION, APP_BASE_URL} from "./assets/variables.js";
 
 module.exports = {
     ssr: false,
@@ -30,11 +30,11 @@ module.exports = {
             { hid: 'description', name: 'description', content: BASE_DESCRIPTION },
             { hid: 'og-title', name: 'og:title', content: BASE_TITLE },
             { hid: 'og-description', name: 'og:description', content: BASE_DESCRIPTION },
-            { hid: 'og-image', name: 'og:image', content: '/social-share.png' },
+            { hid: 'og-image', name: 'og:image', content: `${APP_BASE_URL}social-share.png` },
         ],
         link: [
-            { rel: 'icon', href: '/favicon.png' },
-            { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+            { rel: 'icon', href: `${APP_BASE_URL}favicon.png` },
+            { rel: 'apple-touch-icon', href: `${APP_BASE_URL}apple-touch-icon.png` },
         ],
     },
     css: [
@@ -45,6 +45,7 @@ module.exports = {
     */
     loading: { color: '#cf5c2c' },
     router: {
+        base: process.env.APP_BASE_URL || undefined,
         linkActiveClass: '',
         linkExactActiveClass: 'is-active',
         middleware: [
