@@ -56,7 +56,7 @@ module.exports = {
     plugins: [
         { src: '~/plugins/click-blur.js', ssr: false },
         { src: '~/plugins/anchor-scroll.js', ssr: false },
-        { src: '~/plugins/persistedState.js', ssr: false },
+        // { src: '~/plugins/persistedState.js', ssr: false },
         { src: '~/plugins/seo-gtm.js', ssr: false },
     ],
     env: Object.assign({}, processEnv, dotEnv),

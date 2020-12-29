@@ -9,6 +9,7 @@ export default {
         },
     },
     computed: {
+        // @TODO update distance continuously
         timeDistance() {
             return getTimeDistance(this.tx.timestamp)
         },

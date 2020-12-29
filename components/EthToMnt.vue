@@ -414,7 +414,7 @@ export default {
 
       <div class="card u-mt-15" v-if="transactionList.length">
           <div class="card__content card__content--gray card__content--small u-h--uppercase">Transactions</div>
-          <TxListItem class="card__content" v-for="tx in transactionList" :key="tx.hash" :tx="tx"/>
+          <TxListItem class="card__content card__content--mini" v-for="tx in transactionList" :key="tx.hash" :tx="tx"/>
       </div>
   </div>
 </template>
