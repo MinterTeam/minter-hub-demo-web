@@ -352,7 +352,12 @@ export default {
           <div class="card__content card__content--gray card__content--small u-h--uppercase">Ethereum → <span class="u-text-orange">Minter</span></div>
           <div class="card__content card__content--small" v-if="!isConnected">
               <div class="send__text u-mb-10">
-                  Connect your Ethereum wallet with <img class="send__icon-wc" src="/img/icon-walletconnect.png" srcset="/img/icon-walletconnect@2x.png 2x" alt="" role="presentation"> WalletConnect
+                  Connect your Ethereum wallet with
+                  <img class="send__icon-wc" alt="" role="presentation"
+                       :src="`${BASE_URL_PREFIX}/img/icon-walletconnect.png`"
+                       :srcset="`${BASE_URL_PREFIX}/img/icon-walletconnect@2x.png 2x`"
+                  >
+                  WalletConnect
               </div>
 
               <button class="button button--green" @click="connectEth">Connect</button>

@@ -54,6 +54,7 @@ module.exports = {
         ],
     },
     plugins: [
+        { src: '~/plugins/base-url-prefix.js'},
         { src: '~/plugins/click-blur.js', ssr: false },
         { src: '~/plugins/anchor-scroll.js', ssr: false },
         // { src: '~/plugins/persistedState.js', ssr: false },
