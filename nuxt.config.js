@@ -60,7 +60,7 @@ module.exports = {
         // { src: '~/plugins/persistedState.js', ssr: false },
         { src: '~/plugins/seo-gtm.js', ssr: false },
     ],
-    env: Object.assign({}, processEnv, dotEnv),
+    env: Object.assign({}, processEnv, dotEnv, {APP_BASE_URL: process.env.APP_BASE_URL}),
     modules: [
     ],
     modern: 'client',
