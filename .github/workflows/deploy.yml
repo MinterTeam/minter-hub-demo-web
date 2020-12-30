@@ -2,7 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [ mainnet, testnet, taconet ]
+#    branches: [ mainnet, testnet, taconet ]
+    branches: [ dummy ]
 env:
   INGRESS_DOMAIN_mainnet: "hub-demo.minter.network"
   INGRESS_DOMAIN_testnet: "hub-demo.testnet.minter.network"

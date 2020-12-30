@@ -5,6 +5,7 @@ export const BASE_TITLE_NETWORK = NETWORK === MAINNET ? '' : 'Testnet ';
 export const COIN_NAME = NETWORK === MAINNET ? 'BIP' : 'MNT';
 export const CHAIN_ID = NETWORK === MAINNET ? 1 : 2;
 export const ETHERSCAN_HOST = NETWORK === MAINNET ? 'https://etherscan.io' : 'https://ropsten.etherscan.io';
+export const ETHEREUM_API_URL = 'https://ropsten.dl-dev.ru/';
 
 export const BASE_TITLE_END = ' — Minter';
 export const BASE_TITLE = BASE_TITLE_NETWORK + 'Hub demo' + BASE_TITLE_END;

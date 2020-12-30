@@ -12,7 +12,7 @@ import withParams from 'vuelidate/lib/withParams.js';
 // import axios from "axios";
 import QrcodeVue from 'qrcode.vue';
 import autosize from 'v-autosize';
-import {MAINNET, NETWORK} from '~/assets/variables.js';
+import {MAINNET, NETWORK, ETHEREUM_API_URL} from '~/assets/variables.js';
 import {hubABI, peggyABI} from '~/assets/abiData.js';
 import {getErrorText} from '~/assets/server-error.js';
 import checkEmpty from '~/assets/v-check-empty.js';
@@ -27,7 +27,7 @@ const TX_APPROVE = 'approve';
 const TX_TRANSFER = 'transfer';
 
 let connector;
-let web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/f6a7fe51b4ed473490de58f7f040ffd7"));
+let web3 = new Web3(new Web3.providers.HttpProvider(ETHEREUM_API_URL));
 
 const hubTokenAddress = "0x8c2b6949590bebe6bc1124b670e58da85b081b2e";
 const hubToken = new web3.eth.Contract(hubABI, hubTokenAddress);
