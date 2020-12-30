@@ -27,7 +27,7 @@ const TX_APPROVE = 'approve';
 const TX_TRANSFER = 'transfer';
 
 let connector;
-let web3 = new Web3(new Web3.providers.HttpProvider("http://138.68.24.68:8545/"));
+let web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/f6a7fe51b4ed473490de58f7f040ffd7"));
 
 const hubTokenAddress = "0x8c2b6949590bebe6bc1124b670e58da85b081b2e";
 const hubToken = new web3.eth.Contract(hubABI, hubTokenAddress);
