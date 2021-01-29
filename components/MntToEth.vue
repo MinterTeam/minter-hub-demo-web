@@ -13,6 +13,7 @@ import checkEmpty from '~/assets/v-check-empty.js';
 const HUB_MULTISIG_ADDRESS = 'Mx51951ee4ed37ae9c2ca15514584b17093037de34';
 const HUB_COIN_ID = NETWORK === MAINNET ? 0 : 212;
 const LINK_HOST = NETWORK === MAINNET ? undefined : 'https://testnet.bip.to/';
+const HUB_API = 'https://hub-api.dl-dev.ru';
 
 export default {
     components: {
@@ -48,11 +49,11 @@ export default {
         },
     },
     mounted() {
-        axios.get("http://138.68.24.68:2317/oracle/min_eth_fee").then((data) => {
+        axios.get(HUB_API + "/oracle/min_eth_fee").then((data) => {
             this.minEthFee = BigInt(data.data.result.value)
         })
 
-        axios.get("http://138.68.24.68:2317/oracle/prices").then((data) => {
+        axios.get(HUB_API + "/oracle/prices").then((data) => {
             for (let listKey in data.data.result.list) {
                 if (data.data.result.list[listKey].name === "minter/" + HUB_COIN_ID) {
                     this.hubPrice = BigInt(data.data.result.list[listKey].value)
