@@ -98,7 +98,44 @@ export const peggyABI = [
                 "type": "uint256"
             }
         ],
-        "name": "SendToCosmosEvent",
+        "name": "SendToHubEvent",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "_tokenContract",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "_sender",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "_destination",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "_eventNonce",
+                "type": "uint256"
+            }
+        ],
+        "name": "SendToMinterEvent",
         "type": "event"
     },
     {
@@ -154,55 +191,6 @@ export const peggyABI = [
     {
         "inputs": [
             {
-                "internalType": "address[]",
-                "name": "_currentValidators",
-                "type": "address[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "_currentPowers",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "uint8[]",
-                "name": "_v",
-                "type": "uint8[]"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "_r",
-                "type": "bytes32[]"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "_s",
-                "type": "bytes32[]"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_theHash",
-                "type": "bytes32"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_powerThreshold",
-                "type": "uint256"
-            }
-        ],
-        "name": "checkValidatorSignatures",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "pure",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "address",
                 "name": "_erc20Address",
                 "type": "address"
@@ -222,35 +210,24 @@ export const peggyABI = [
     {
         "inputs": [
             {
-                "internalType": "address[]",
-                "name": "_validators",
-                "type": "address[]"
+                "internalType": "address",
+                "name": "_tokenContract",
+                "type": "address"
             },
             {
-                "internalType": "uint256[]",
-                "name": "_powers",
-                "type": "uint256[]"
+                "internalType": "bytes32",
+                "name": "_destination",
+                "type": "bytes32"
             },
             {
                 "internalType": "uint256",
-                "name": "_valsetNonce",
+                "name": "_amount",
                 "type": "uint256"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_peggyId",
-                "type": "bytes32"
             }
         ],
-        "name": "makeCheckpoint",
-        "outputs": [
-            {
-                "internalType": "bytes32",
-                "name": "",
-                "type": "bytes32"
-            }
-        ],
-        "stateMutability": "pure",
+        "name": "sendToHub",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -269,14 +246,9 @@ export const peggyABI = [
                 "internalType": "uint256",
                 "name": "_amount",
                 "type": "uint256"
-            },
-            {
-                "internalType": "uint8",
-                "name": "_type",
-                "type": "uint8"
             }
         ],
-        "name": "sendToCosmos",
+        "name": "sendToMinter",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -378,6 +350,11 @@ export const peggyABI = [
                 "type": "uint256[]"
             },
             {
+                "internalType": "uint256",
+                "name": "_currentValsetNonce",
+                "type": "uint256"
+            },
+            {
                 "internalType": "uint8[]",
                 "name": "_v",
                 "type": "uint8[]"
@@ -393,47 +370,34 @@ export const peggyABI = [
                 "type": "bytes32[]"
             },
             {
-                "internalType": "bytes32",
-                "name": "_theHash",
-                "type": "bytes32"
+                "internalType": "uint256[]",
+                "name": "_amounts",
+                "type": "uint256[]"
             },
             {
-                "internalType": "uint256",
-                "name": "_powerThreshold",
-                "type": "uint256"
-            }
-        ],
-        "name": "testCheckValidatorSignatures",
-        "outputs": [],
-        "stateMutability": "pure",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "address[]",
-                "name": "_validators",
+                "name": "_destinations",
                 "type": "address[]"
             },
             {
                 "internalType": "uint256[]",
-                "name": "_powers",
+                "name": "_fees",
                 "type": "uint256[]"
             },
             {
                 "internalType": "uint256",
-                "name": "_valsetNonce",
+                "name": "_batchNonce",
                 "type": "uint256"
             },
             {
-                "internalType": "bytes32",
-                "name": "_peggyId",
-                "type": "bytes32"
+                "internalType": "address",
+                "name": "_tokenContract",
+                "type": "address"
             }
         ],
-        "name": "testMakeCheckpoint",
+        "name": "submitBatch",
         "outputs": [],
-        "stateMutability": "pure",
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -487,123 +451,6 @@ export const peggyABI = [
         "name": "updateValset",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address[]",
-                "name": "_newValidators",
-                "type": "address[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "_newPowers",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_newValsetNonce",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address[]",
-                "name": "_currentValidators",
-                "type": "address[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "_currentPowers",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_currentValsetNonce",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint8[]",
-                "name": "_v",
-                "type": "uint8[]"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "_r",
-                "type": "bytes32[]"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "_s",
-                "type": "bytes32[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "_amounts",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "address[]",
-                "name": "_destinations",
-                "type": "address[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "_fees",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_batchNonce",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address",
-                "name": "_tokenContract",
-                "type": "address"
-            }
-        ],
-        "name": "updateValsetAndSubmitBatch",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_signer",
-                "type": "address"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_theHash",
-                "type": "bytes32"
-            },
-            {
-                "internalType": "uint8",
-                "name": "_v",
-                "type": "uint8"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_r",
-                "type": "bytes32"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_s",
-                "type": "bytes32"
-            }
-        ],
-        "name": "verifySig",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "pure",
         "type": "function"
     }
 ];

@@ -1,7 +1,7 @@
 <script>
 import {validationMixin} from 'vuelidate';
 import required from 'vuelidate/lib/validators/required';
-// import axios from "axios";
+import axios from "axios";
 import QrcodeVue from 'qrcode.vue';
 import autosize from 'v-autosize';
 import {prepareLink} from "minter-js-sdk";
@@ -10,7 +10,7 @@ import {MAINNET, NETWORK} from 'assets/variables.js';
 import checkEmpty from '~/assets/v-check-empty.js';
 
 
-const HUB_MULTISIG_ADDRESS = 'Mxb26bc23e5a72ea2033f70006751066602d3349fd';
+const HUB_MULTISIG_ADDRESS = 'Mx51951ee4ed37ae9c2ca15514584b17093037de34';
 const HUB_COIN_ID = NETWORK === MAINNET ? 0 : 212;
 const LINK_HOST = NETWORK === MAINNET ? undefined : 'https://testnet.bip.to/';
 
@@ -29,11 +29,36 @@ export default {
             // balances: [],
             form: {
                 amount: "",
-                address: ""
+                address: "",
+                fee: "",
             },
+            minEthFee: BigInt(0),
+            hubPrice: BigInt(0),
             // transactions: []
             linkToBip: '',
         }
+    },
+    computed: {
+        minFee() {
+            if (this.hubPrice === 0n) {
+                return "...";
+            }
+
+            return Number((this.minEthFee * 10000n / this.hubPrice).toString()) / 10000;
+        },
+    },
+    mounted() {
+        axios.get("http://138.68.24.68:2317/oracle/min_eth_fee").then((data) => {
+            this.minEthFee = BigInt(data.data.result.value)
+        })
+
+        axios.get("http://138.68.24.68:2317/oracle/prices").then((data) => {
+            for (let listKey in data.data.result.list) {
+                if (data.data.result.list[listKey].name === "minter/" + HUB_COIN_ID) {
+                    this.hubPrice = BigInt(data.data.result.list[listKey].value)
+                }
+            }
+        })
     },
     validations() {
         return {
@@ -45,6 +70,11 @@ export default {
                     }
                 },
                 amount: {
+                    required,
+                    // validAmount: isValidAmount,
+                    // maxValue: maxValue(this.maxAmount || 0),
+                },
+                fee: {
                     required,
                     // validAmount: isValidAmount,
                     // maxValue: maxValue(this.maxAmount || 0),
@@ -66,12 +96,17 @@ export default {
                     value: this.form.amount,
                     coin: HUB_COIN_ID,
                 },
-                payload: this.form.address,
+                payload: JSON.stringify({
+                    recipient: this.form.address,
+                    type: 'send_to_eth',
+                    fee: BigInt(BigInt(Math.round(this.form.fee * 10000)) * BigInt(1e14)).toString(),
+                }),
             };
 
             this.$v.$reset();
             this.form.address = '';
             this.form.amount = '';
+            this.form.fee = '';
             this.linkToBip = prepareLink(txParams, LINK_HOST);
         },
     },
@@ -105,6 +140,16 @@ export default {
                           <span class="form-field__label">HUB amount</span>
                       </label>
                       <span class="form-field__error" v-if="$v.form.amount.$dirty && !$v.form.amount.required">Enter amount</span>
+                  </div>
+                  <div class="u-cell u-cell--small--auto send__amount-cell">
+                      <label class="form-field form-field--row" :class="{'is-error': $v.form.fee.$error}">
+                          <input class="form-field__input" type="text" inputmode="decimal" v-check-empty
+                                 v-model.trim="form.fee"
+                                 @blur="$v.form.fee.$touch()"
+                          />
+                          <span class="form-field__label">Fee (min {{minFee}} HUB)</span>
+                      </label>
+                      <span class="form-field__error" v-if="$v.form.fee.$dirty && !$v.form.fee.required">Enter fee</span>
                   </div>
                   <div class="u-cell u-cell--small--auto">
                       <button class="button button--ghost-green send__submit-button" :class="{'is-disabled': $v.$invalid}">Show QR</button>

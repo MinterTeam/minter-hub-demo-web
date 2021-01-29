@@ -32,21 +32,8 @@ let web3 = new Web3(new Web3.providers.HttpProvider(ETHEREUM_API_URL));
 const hubTokenAddress = "0x8c2b6949590bebe6bc1124b670e58da85b081b2e";
 const hubToken = new web3.eth.Contract(hubABI, hubTokenAddress);
 
-const peggyAddress = "0x2bb8221b4df28ee45d159c55c50bcebf18dc7a40";
+const peggyAddress = "0x4a3884a6112164d476c9574b5418786f495f9478";
 const peggyContract = new web3.eth.Contract(peggyABI, peggyAddress);
-
-const chainId = 3;
-const customChainCommon = EthCommon.forCustomChain(
-    'mainnet',
-    {
-        name: 'my-network',
-        networkId: chainId,
-        chainId: chainId,
-    },
-    'petersburg',
-)
-
-
 
 const isValidAmount = withParams({type: 'validAmount'}, (value) => {
     return parseFloat(value) >= 0;
@@ -294,10 +281,9 @@ export default {
             return this.sendEthTx(hubTokenAddress, data);
         },
         sendHubTx() {
-            let address, t;
-            t = 1
+            let address;
             address = Buffer.concat([Buffer.alloc(12), Buffer.from(web3.utils.hexToBytes(this.form.address.replace("Mx", "0x")))])
-            let data = peggyContract.methods.sendToCosmos(hubTokenAddress, address, web3.utils.toWei(this.form.amount, "ether"), t).encodeABI()
+            let data = peggyContract.methods.sendToMinter(hubTokenAddress, address, web3.utils.toWei(this.form.amount, "ether")).encodeABI()
 
             return this.sendEthTx(peggyAddress, data);
         },
