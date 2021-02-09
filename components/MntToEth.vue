@@ -10,7 +10,7 @@ import {MAINNET, NETWORK} from 'assets/variables.js';
 import checkEmpty from '~/assets/v-check-empty.js';
 
 
-const HUB_MULTISIG_ADDRESS = 'Mx51951ee4ed37ae9c2ca15514584b17093037de34';
+const HUB_MULTISIG_ADDRESS = 'Mxc2fc53daa593ddbba176b56479d5f894ea93e13b';
 const HUB_COIN_ID = NETWORK === MAINNET ? 0 : 212;
 const LINK_HOST = NETWORK === MAINNET ? undefined : 'https://testnet.bip.to/';
 const HUB_API = 'https://hub-api.dl-dev.ru';
